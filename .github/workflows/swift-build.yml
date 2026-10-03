@@ -22,15 +22,15 @@ jobs:
 
     - name: Build Premium App
       run: |
-        xcodebuild -scheme "AirSync Self Compiled" -configuration Release -derivedDataPath my_build_folder CODE_SIGNING_ALLOWED=NO CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO clean build | xcpretty
+        xcodebuild -workspace airsync-mac.xcworkspace -scheme "AirSync Self Compiled" -configuration Release -derivedDataPath BuildData CODE_SIGNING_ALLOWED=NO CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO clean build | xcpretty
 
-    - name: Stage Executable Application
+    - name: Stage Executable Bundle
       run: |
-        mkdir -p ready_to_download
-        cp -R my_build_folder/Build/Products/Release/AirSync.app ready_to_download/AirSync.app
+        mkdir -p final_delivery
+        cp -R BuildData/Build/Products/Release/AirSync.app final_delivery/AirSync.app
 
     - name: Upload Premium App Artifact
       uses: actions/upload-artifact@v4
       with:
         name: AirSync-Premium-Unlocked
-        path: ready_to_download/AirSync.app
+        path: final_delivery/AirSync.app
