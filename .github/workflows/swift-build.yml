@@ -20,13 +20,17 @@ jobs:
       with:
         xcode-version: latest
 
-    - name: Build Premium App
+    - name: Compile and Archive App
       run: |
-        xcodebuild -scheme "AirSync Self Compiled" -configuration Release CODE_SIGNING_ALLOWED=NO CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO clean build | xcpretty
+        xcodebuild archive -archivePath $PWD/AirSync.xcarchive -scheme "AirSync Self Compiled" -configuration Release CODE_SIGNING_ALLOWED=NO CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+
+    - name: Extract Standalone App Bundle
+      run: |
+        mkdir -p final_app
+        cp -R AirSync.xcarchive/Products/Applications/AirSync.app final_app/AirSync.app
 
     - name: Upload Premium App Artifact
       uses: actions/upload-artifact@v4
       with:
         name: AirSync-Premium-Unlocked
-        path: |
-          **/AirSync.app
+        path: final_app/AirSync.app
