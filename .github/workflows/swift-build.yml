@@ -28,8 +28,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: AirSync-Premium-Unlocked
-        path: |
-          **/.derivedData/Build/Products/Release/*.app
-          **/build/Build/Products/Release/*.app
-          ~/Library/Developer/Xcode/DerivedData/**/Build/Products/Release/*.app
-          
+        path: build/Release/AirSync.app
