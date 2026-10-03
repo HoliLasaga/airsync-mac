@@ -20,36 +20,15 @@ jobs:
       with:
         xcode-version: latest
 
-    - name: Build Debug
-      run: |
-        xcodebuild -scheme airsync-mac -configuration Debug clean build | xcpretty
-
-    - name: Build Release
+    - name: Build Premium App
       run: |
         xcodebuild -scheme "AirSync Self Compiled" -configuration Release CODE_SIGNING_ALLOWED=NO CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO clean build | xcpretty
 
-    - name: Archive Debug Build Artifacts
-      if: success()
-      run: |
-        mkdir -p build-artifacts/Debug
-        cp -R "$(xcodebuild -scheme airsync-mac -configuration Debug -showBuildSettings | grep -m 1 BUILD_DIR | awk '{print $3}')/Debug/"* build-artifacts/Debug/
-      shell: bash
-
-    - name: Archive Release Build Artifacts
-      if: success()
-      run: |
-        mkdir -p build-artifacts/Release
-        cp -R "$(xcodebuild -scheme AirSync Self Compiled -configuration Release -showBuildSettings | grep -m 1 BUILD_DIR | awk '{print $3}')/Release/"* build-artifacts/Release/
-      shell: bash
-
-    - name: Upload Debug Build Artifacts
+    - name: Upload Premium App Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: AirSync-Debug
-        path: build-artifacts/Debug
-
-    - name: Upload Release Build Artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: AirSync-Release
-        path: build/Build/Products/Release/
+        name: AirSync-Premium-Unlocked
+        path: |
+          **/.derivedData/Build/Products/Release/*.app
+          **/build/Build/Products/Release/*.app
+          ~/Library/Developer/Xcode/DerivedData/**/Build/Products/Release/*.app
