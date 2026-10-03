@@ -32,3 +32,4 @@ jobs:
           **/.derivedData/Build/Products/Release/*.app
           **/build/Build/Products/Release/*.app
           ~/Library/Developer/Xcode/DerivedData/**/Build/Products/Release/*.app
+          
