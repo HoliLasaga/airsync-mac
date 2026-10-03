@@ -52,4 +52,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: AirSync-Release
-        path: build-artifacts/Release
+        path: build/Build/Products/Release/
